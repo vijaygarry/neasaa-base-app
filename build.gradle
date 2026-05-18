@@ -1,31 +1,12 @@
-apply plugin: 'jacoco'
-
-jar {
-    archiveBaseName.set('neasaa-base-app')
+plugins {
+    // Apply the spotless plugin before common.gradle.
+    id 'com.diffplug.spotless' version '8.5.1' apply false
 }
 
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-    finalizedBy jacocoTestReport
-}
+apply from: "${rootDir}/gradle/libraries.gradle"
+apply from: "${rootDir}/gradle/common.gradle"
 
-jacocoTestReport {
-    dependsOn test
-    reports {
-        html.required = true
-        xml.required = false
-        csv.required = false
-    }
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, include: 'com/neasaa/base/app/utils/**')
-        }))
-    }
-}
-
+// ─── dependencies ─────────────────────────────────────────────────────────────
 dependencies {
     api libraries.springFramework
     implementation libraries.springLogger
@@ -36,15 +17,22 @@ dependencies {
     api libraries.email
     implementation libraries.jdbcLibs
     implementation libraries.jasypt
-    testImplementation libraries.unitTest
 }
 
-eclipse {
-    def repoSource = "${rootDir.path}"
-    // Fix windows directory delimiters
-    repoSource = repoSource.replaceAll( "\\\\", "/" )
+// ─── jar ──────────────────────────────────────────────────────────────────────
+jar {
+    archiveBaseName.set('neasaa-base-app')
+}
 
-    project {
-        name = 'neasaa-base-app'
-    }
+// ─── coverage ─────────────────────────────────────────────────────────────────
+// Set ext.jacocoCoverageIncludes in the project build.gradle to filter coverage.
+// Defaults to all classes if not set.
+ext.jacocoCoverageIncludes = ['com/neasaa/base/app/utils/**']
+
+
+// ─── release: test + publish ──────────────────────────────────────────────────
+tasks.register('release') {
+    group = 'release'
+    description = 'Compiles, tests, and publishes artifact to Artifactory.'
+    dependsOn test
 }
