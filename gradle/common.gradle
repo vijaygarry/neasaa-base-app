@@ -2,6 +2,8 @@ apply plugin: 'java-library'
 apply plugin: 'com.diffplug.spotless'
 apply plugin: 'jacoco'
 
+apply from: "${rootDir}/gradle/libraries.gradle"
+
 repositories {
     mavenCentral()
     flatDir { dirs "${rootDir}/libs" }

@@ -3,7 +3,6 @@ plugins {
     id 'com.diffplug.spotless' version '8.5.1' apply false
 }
 
-apply from: "${rootDir}/gradle/libraries.gradle"
 apply from: "${rootDir}/gradle/common.gradle"
 
 // ─── dependencies ─────────────────────────────────────────────────────────────
