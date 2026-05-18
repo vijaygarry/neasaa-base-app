@@ -3,11 +3,6 @@ ext.springBootVersion = '3.4.5'
 ext.springFrameworkVersion = '6.2.6'
 ext.tomcatVersion = '10.1.40'
 ext.jacksonVersion = '2.18.3'
-//This file list out all the jars required by this application
-
-// Define list of jars to be used by application
-// Note: All these jars are not included in all projects by default, Include required libraries in projects as required.
-
 
 ext.libraries = [
     lombok: "org.projectlombok:lombok:1.18.38@jar",
@@ -221,21 +216,3 @@ libraries << [
 		libraries.angusMail,
 	]
 ]
-
-
-/*
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.session:spring-session-jdbc'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation 'org.springframework.security:spring-security-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-*/
