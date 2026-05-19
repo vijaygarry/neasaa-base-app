@@ -3,6 +3,8 @@ package com.neasaa.base.app.dao.pg;
 import com.neasaa.base.app.operation.BeanNames;
 import com.neasaa.util.DateUtils;
 import com.neasaa.util.StringUtils;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,13 +12,29 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class AbstractDao {
 
-  public static final String BASE_SCHEMA_NAME = "shared_schema.";
+  public static final String BASE_SCHEMA_NAME;
+
+  static {
+    String schemaName = "base_schema.";
+    try (InputStream is =
+        AbstractDao.class.getClassLoader().getResourceAsStream("db.properties")) {
+      if (is != null) {
+        Properties props = new Properties();
+        props.load(is);
+        schemaName = props.getProperty("app.datasource.schema.name", "base_schema.");
+      }
+    } catch (IOException e) {
+      // fall back to default
+    }
+    BASE_SCHEMA_NAME = schemaName;
+  }
 
   @Autowired
   @Qualifier(BeanNames.JDBC_TEMPLATE_BEAN)
