@@ -16,7 +16,6 @@ public class OperationEntity extends BaseEntity {
   public static final long serialVersionUID = 1745893230070L;
   private String operationId;
   private String description;
-  private String beanName;
   private boolean authorizationRequired;
   private boolean auditRequired;
   private AuthorizationType authorizationType;

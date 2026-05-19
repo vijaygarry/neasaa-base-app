@@ -17,7 +17,6 @@ public class OperationEntityRowMapper implements RowMapper<OperationEntity> {
     OperationEntity operationEntity = new OperationEntity();
     operationEntity.setOperationId(aRs.getString("OPERATIONID"));
     operationEntity.setDescription(aRs.getString("DESCRIPTION"));
-    operationEntity.setBeanName(aRs.getString("BEANNAME"));
     operationEntity.setAuthorizationRequired(aRs.getBoolean("ISAUTHORIZATIONREQUIRED"));
     operationEntity.setAuditRequired(aRs.getBoolean("ISAUDITREQUIRED"));
     operationEntity.setAuthorizationType(

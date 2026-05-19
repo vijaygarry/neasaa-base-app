@@ -17,20 +17,19 @@ public class OperationEntityDao extends AbstractDao {
   private PreparedStatement buildInsertStatement(
       Connection aConection, OperationEntity aOperationEntity) throws SQLException {
     String sqlStatement =
-        "INSERT INTO LKPOPERATION (OPERATIONID, DESCRIPTION, BEANNAME, ISAUTHORIZATIONREQUIRED, ISAUDITREQUIRED, AUTHORIZATIONTYPE, ACTIVE, CREATEDBY, CREATEDDATE, LASTUPDATEDBY, LASTUPDATEDDATE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO LKPOPERATION (OPERATIONID, DESCRIPTION, ISAUTHORIZATIONREQUIRED, ISAUDITREQUIRED, AUTHORIZATIONTYPE, ACTIVE, CREATEDBY, CREATEDDATE, LASTUPDATEDBY, LASTUPDATEDDATE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     PreparedStatement prepareStatement = aConection.prepareStatement(sqlStatement);
     setStringInStatement(prepareStatement, 1, aOperationEntity.getOperationId());
     setStringInStatement(prepareStatement, 2, aOperationEntity.getDescription());
-    setStringInStatement(prepareStatement, 3, aOperationEntity.getBeanName());
-    setBooleanInStatement(prepareStatement, 4, aOperationEntity.isAuthorizationRequired());
-    setBooleanInStatement(prepareStatement, 5, aOperationEntity.isAuditRequired());
-    setStringInStatement(prepareStatement, 6, aOperationEntity.getAuthorizationType().name());
-    setBooleanInStatement(prepareStatement, 7, aOperationEntity.isActive());
-    setIntInStatement(prepareStatement, 8, aOperationEntity.getCreatedBy());
-    setTimestampInStatement(prepareStatement, 9, aOperationEntity.getCreatedDate());
-    setIntInStatement(prepareStatement, 10, aOperationEntity.getLastupdatedBy());
-    setTimestampInStatement(prepareStatement, 11, aOperationEntity.getLastupdatedDate());
+    setBooleanInStatement(prepareStatement, 3, aOperationEntity.isAuthorizationRequired());
+    setBooleanInStatement(prepareStatement, 4, aOperationEntity.isAuditRequired());
+    setStringInStatement(prepareStatement, 5, aOperationEntity.getAuthorizationType().name());
+    setBooleanInStatement(prepareStatement, 6, aOperationEntity.isActive());
+    setIntInStatement(prepareStatement, 7, aOperationEntity.getCreatedBy());
+    setTimestampInStatement(prepareStatement, 8, aOperationEntity.getCreatedDate());
+    setIntInStatement(prepareStatement, 9, aOperationEntity.getLastupdatedBy());
+    setTimestampInStatement(prepareStatement, 10, aOperationEntity.getLastupdatedDate());
     return prepareStatement;
   }
 
@@ -64,20 +63,19 @@ public class OperationEntityDao extends AbstractDao {
   public PreparedStatement buildUpdateStatement(
       Connection aConection, OperationEntity aOperationEntity) throws SQLException {
     String updateStatement =
-        "UPDATE LKPOPERATION SET DESCRIPTION = ? , BEANNAME = ? , ISAUTHORIZATIONREQUIRED = ? , ISAUDITREQUIRED = ? , AUTHORIZATIONTYPE = ? , ACTIVE = ? , CREATEDBY = ? , CREATEDDATE = ? , LASTUPDATEDBY = ? , LASTUPDATEDDATE = ?  where OPERATIONID = ?";
+        "UPDATE LKPOPERATION SET DESCRIPTION = ? , ISAUTHORIZATIONREQUIRED = ? , ISAUDITREQUIRED = ? , AUTHORIZATIONTYPE = ? , ACTIVE = ? , CREATEDBY = ? , CREATEDDATE = ? , LASTUPDATEDBY = ? , LASTUPDATEDDATE = ?  where OPERATIONID = ?";
 
     PreparedStatement prepareStatement = aConection.prepareStatement(updateStatement);
     setStringInStatement(prepareStatement, 1, aOperationEntity.getDescription());
-    setStringInStatement(prepareStatement, 2, aOperationEntity.getBeanName());
-    setBooleanInStatement(prepareStatement, 3, aOperationEntity.isAuthorizationRequired());
-    setBooleanInStatement(prepareStatement, 4, aOperationEntity.isAuditRequired());
-    setStringInStatement(prepareStatement, 5, aOperationEntity.getAuthorizationType().name());
-    setBooleanInStatement(prepareStatement, 6, aOperationEntity.isActive());
-    setIntInStatement(prepareStatement, 7, aOperationEntity.getCreatedBy());
-    setTimestampInStatement(prepareStatement, 8, aOperationEntity.getCreatedDate());
-    setIntInStatement(prepareStatement, 9, aOperationEntity.getLastupdatedBy());
-    setTimestampInStatement(prepareStatement, 10, aOperationEntity.getLastupdatedDate());
-    setStringInStatement(prepareStatement, 11, aOperationEntity.getOperationId());
+    setBooleanInStatement(prepareStatement, 2, aOperationEntity.isAuthorizationRequired());
+    setBooleanInStatement(prepareStatement, 3, aOperationEntity.isAuditRequired());
+    setStringInStatement(prepareStatement, 4, aOperationEntity.getAuthorizationType().name());
+    setBooleanInStatement(prepareStatement, 5, aOperationEntity.isActive());
+    setIntInStatement(prepareStatement, 6, aOperationEntity.getCreatedBy());
+    setTimestampInStatement(prepareStatement, 7, aOperationEntity.getCreatedDate());
+    setIntInStatement(prepareStatement, 8, aOperationEntity.getLastupdatedBy());
+    setTimestampInStatement(prepareStatement, 9, aOperationEntity.getLastupdatedDate());
+    setStringInStatement(prepareStatement, 10, aOperationEntity.getOperationId());
     return prepareStatement;
   }
 
@@ -95,7 +93,7 @@ public class OperationEntityDao extends AbstractDao {
 
   public List<OperationEntity> fetchAllActiveOperations() throws SQLException {
     String selectQuery =
-        "select  OPERATIONID , DESCRIPTION , BEANNAME , ISAUTHORIZATIONREQUIRED , ISAUDITREQUIRED , AUTHORIZATIONTYPE , "
+        "select  OPERATIONID , DESCRIPTION , ISAUTHORIZATIONREQUIRED , ISAUDITREQUIRED , AUTHORIZATIONTYPE , "
             + "ACTIVE , CREATEDBY , CREATEDDATE , LASTUPDATEDBY , LASTUPDATEDDATE  "
             + "from "
             + BASE_SCHEMA_NAME
