@@ -13,6 +13,8 @@ import com.neasaa.base.app.operation.model.OperationResponse;
 import com.neasaa.base.app.service.AppSessionUser;
 import com.neasaa.base.app.service.AuthorizationService;
 import com.neasaa.base.app.service.SessionService;
+import com.neasaa.base.app.utils.AuditLogUtil;
+
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,29 +171,22 @@ public abstract class AbstractOperation<
       return;
     }
 
-    if (appSessionUser == null) {
-      log.info("AppSession is null, skipping auditing");
-      return;
-    }
-    if (context == null) {
-      log.info("Operation Context is null, skipping auditing");
-      return;
-    }
-
-    String responseString = null;
+    String responseString = getResponseString(response, exception);
     int httpResponseCode = 200;
     if (exception != null) {
       httpResponseCode = exception.getHttpResponseCode();
-      responseString = "{\"operationMessage\": \"" + exception.getMessage() + "\"}";
     }
 
     String requestString = null;
     if (request != null) {
       requestString = getJsonString(request);
     }
-    if (response != null) {
-      responseString = getJsonString(response);
+
+    if (appSessionUser == null || context == null) {
+      AuditLogUtil.log(operationEntity, requestString, responseString, httpResponseCode);
+      return;
     }
+    
 
     sessionService.auditTransaction(
         appSessionUser.getSessionId(),
@@ -203,6 +198,19 @@ public abstract class AbstractOperation<
         requestString,
         responseString);
   }
+
+  private String getResponseString(OperationResponse response, OperationException exception) {
+
+    if (response != null) {
+      return getJsonString(response);
+    }
+
+    if (exception != null) {
+      return "{\"operationMessage\": \"" + exception.getMessage() + "\"}";
+    }
+    return null;
+  }
+
 
   private String getJsonString(Object obj) {
     ObjectMapper mapper = new ObjectMapper();

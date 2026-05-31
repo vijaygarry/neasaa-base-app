@@ -60,19 +60,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
       if (role == null) {
         continue;
       }
-      return role.hasOperation(aOperationEntity.getOperationId());
+      if(role.hasOperation(aOperationEntity.getOperationId())) {
+        return true;
+      }
     }
     return false;
   }
-
-  //	private static AppUserDto getSessionUser (AppSession aAppSession) throws OperationException {
-  //		AppUserDto userDto = aAppSession.getSessionUser();
-  //		if(userDto == null) {
-  //			throw new OperationException(ErrorCodes.USER_UNAUTHORIZED, "Please login to perform this
-  // operation.");
-  //		}
-  //		return userDto;
-  //	}
 
   @Override
   public OperationEntity getOperationByName(String aOperationName) {
