@@ -29,6 +29,21 @@ jar {
 ext.jacocoCoverageIncludes = ['com/neasaa/base/app/utils/**']
 
 
+// ─── hashPassword: generate bcrypt hash for a plain-text password ─────────────
+// Usage: ./gradlew hashPassword -PplainText=mySecret
+tasks.register('hashPassword', JavaExec) {
+    group = 'tools'
+    description = 'Hashes a plain-text password. Pass -PplainText=<password>.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.neasaa.base.app.ops.tools.ResetUserPassword'
+    args = [project.findProperty('plainText') ?: '']
+    doFirst {
+        if (!project.hasProperty('plainText')) {
+            throw new GradleException("Missing required property. Run with: -PplainText=<password>")
+        }
+    }
+}
+
 // ─── release: test + publish ──────────────────────────────────────────────────
 tasks.register('release') {
     group = 'release'
