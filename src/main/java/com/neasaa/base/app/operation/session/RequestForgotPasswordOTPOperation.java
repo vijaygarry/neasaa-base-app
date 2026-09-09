@@ -97,7 +97,7 @@ public class RequestForgotPasswordOTPOperation
         otpVerificationDao.moveOtpToHistory(otpInformation);
         log.info(
             "Record moved to history table for logonName: {} and OTP Type: {}", logonName,
-            OTPType.SIGN_UP);
+            OTPType.FORGOT_PASSWORD);
       } else {
         // Current OTP is still valid, we can resend the same OTP
         RequestForgotPasswordOTPResponse response = new RequestForgotPasswordOTPResponse();
