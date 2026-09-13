@@ -27,6 +27,9 @@ public abstract class AbstractOperation<
         Request extends OperationRequest, Response extends OperationResponse>
     implements Operation<Request, Response> {
 
+  private static final ObjectMapper OBJECT_MAPPER =
+      new ObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
   @Autowired
   @Qualifier(BeanNames.AUTHORIZATION_SERVICE_BEAN)
   private AuthorizationService authorizationService;
@@ -213,10 +216,8 @@ public abstract class AbstractOperation<
 
 
   private String getJsonString(Object obj) {
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     try {
-      return mapper.writeValueAsString(obj);
+      return OBJECT_MAPPER.writeValueAsString(obj);
     } catch (JsonProcessingException e) {
       log.info("Failed to build json string for auditing", e);
       return "Failed to build json string for auditing";

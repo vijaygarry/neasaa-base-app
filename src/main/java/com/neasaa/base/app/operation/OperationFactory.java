@@ -39,7 +39,7 @@ public class OperationFactory implements ApplicationContextAware {
 
   private static String getBeanNameFromClass(Class<?> aClazz) {
     String className = aClazz.getSimpleName();
-    System.out.println("Loading operation class for " + className);
+    log.info("Loading operation class for " + className);
     //		className = className.substring( 0, 1 ).toLowerCase() + className.substring( 1 );
     //		System.out.println("Updated Loading operation class for " + className);
     return className;

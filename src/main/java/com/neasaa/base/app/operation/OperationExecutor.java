@@ -9,6 +9,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class OperationExecutor {
 
+  // Utility class, so private constructor to prevent instantiation
+  private OperationExecutor() {}
+
   public static <
           Request extends OperationRequest,
           Response extends OperationResponse,
